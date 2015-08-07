@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Component xmlns="http://www.red5studios.com/"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.red5studios.com/ ../../../../schemas/component.xsd">
+    <Info
+        title="Morphii"
+        author="Arkii"
+        description="Make your face pretty! :D"
+        url=""
+        uiVersion="1000"
+    />
+
+    <Events>
+        <Event name="ON_COMPONENT_LOAD"                 bind="OnComponentLoad" />
+        <Event name="ON_PLAYER_READY"                   bind="OnPlayerReady" />
+        <Event name="ON_RESOLUTION_CHANGED"             bind="OnResolutionChanged" />
+        <Event name="ON_SIN_OBJECT_MOUSEOVER"           bind="OnSinModelMouseover" />
+    </Events>
+
+    <Strings>
+        <String key="CAMERA_HEADER" text="Camera" lang="EN" />
+        <String key="CAMERA_LEFT" text="Left" lang="EN" />
+        <String key="CAMERA_FRONT" text="Front" lang="EN" />
+        <String key="CAMERA_RIGHT" text="Right" lang="EN" />
+        <String key="CAMERA_FAR" text="Far" lang="EN" />
+        <String key="APPEARANCE_HEADER" text="Appearance" lang="EN" />
+        <String key="DISPLAY_HAIR" text="Display Hair" lang="EN" />
+        <String key="DISPLAY_BATTLEFRAME" text="Display Battleframe" lang="EN" />
+        <String key="FUN_HEADER" text="Fun" lang="EN" />
+        <String key="DARK_SOULS" text="Dark Souls" lang="EN" />
+        <String key="PRESETS" text="Presets" lang="EN" />
+        <String key="CURRENT_PRESET" text="Current:" lang="EN" />
+        <String key="TOGGLE_UI_CONTROLS" text="Toggle UI" lang="EN" />
+        <String key="DISPLAY_ORNAMENTS" text="Dispaly Ornaments" lang="EN" />
+    </Strings>
+	
+	<Textures>
+		<Texture name="categoryCollapsed" src="components/LoginUI/CharacterCreation/Textures/category_bg_collapsed_default.png" premultiplied="false"/>
+        <Texture name="categoryCollapsedRollover" src="components/LoginUI/CharacterCreation/Textures/category_bg_collapsed_active.png" premultiplied="false"/>
+        <Texture name="categoryExpanded" src="components/LoginUI/CharacterCreation/Textures/category_bg_expanded_default.png" premultiplied="false"/>
+        <Texture name="categoryExpandedRollover" src="components/LoginUI/CharacterCreation/Textures/category_bg_expanded_active.png" premultiplied="false"/>
+
+        <Texture name="backBtnBG" src="components/LoginUI/CharacterCreation/Textures/back_bg_default.png" premultiplied="false"/>
+        <Texture name="backBtnBGRollover" src="components/LoginUI/CharacterCreation/Textures/back_bg_rollover.png" premultiplied="false"/>
+        <Texture name="defaultsBtnBG" src="components/LoginUI/CharacterCreation/Textures/reset_bg_default.png" premultiplied="false"/>
+        <Texture name="defaultsBtnBGRollover" src="components/LoginUI/CharacterCreation/Textures/reset_bg_rollover.png" premultiplied="false"/>
+
+        <Texture name="CCHeader" src="components/LoginUI/CharacterCreation/Textures/type_header.png" premultiplied="false"/>
+
+        <Texture name="rotateArrowLeft" src="components/LoginUI/CharacterCreation/Textures/arrow_left_cc.png" premultiplied="false"/>
+        <Texture name="rotateArrowLeftHover" src="components/LoginUI/CharacterCreation/Textures/arrow_left_cc_hover.png" premultiplied="false"/>
+        <Texture name="rotateArrowRight" src="components/LoginUI/CharacterCreation/Textures/arrow_right_cc.png" premultiplied="false"/>
+        <Texture name="rotateArrowRightHover" src="components/LoginUI/CharacterCreation/Textures/arrow_right_cc_hover.png" premultiplied="false"/>
+
+        <Texture name="head_left" src="./Textures/head_left.png" premultiplied="false"/>
+        <Texture name="head_right" src="./Textures/head_right.png" premultiplied="false"/>
+        <Texture name="head_front" src="./Textures/head_front.png" premultiplied="false"/>
+        <Texture name="far" src="./Textures/far.png" premultiplied="false"/>
+        <Texture name="Reset" src="./Textures/Undo.png" premultiplied="false"/>
+        <Texture name="ArrowUp" src="./Textures/ArrowUp.dds" premultiplied="false"/>
+	</Textures>
+
+    <Masks>
+        <Mask name="rotateLeftMask" src="components/LoginUI/CharacterCreation/Textures/arrow_left_cc.png" premultiplied="false"/>
+        <Mask name="rotateRightMask" src="components/LoginUI/CharacterCreation/Textures/arrow_right_cc.png" premultiplied="false"/>
+    </Masks>
+
+    <styles>
+        <StyleSheet name="CategoryHeaderButton">
+            texture:categoryCollapsed;
+            texture-Selected:categoryCollapsedRollover;
+            region:;
+            region-Selected:;
+            region-Clicked:;
+            cursor:sys_hand;
+        </StyleSheet>
+        <StyleSheet name="CategoryHeaderText">
+            font:UbuntuBold_13;
+            color:ffffff;
+            halign:right;
+            valign:center;
+        </StyleSheet>
+         <StyleSheet name="MorphSlider">
+            font:UbuntuBold_9;
+            color:ffffff;
+            tabbable:true;
+            scrollsteps:100;
+            horizontal:true;
+        </StyleSheet>
+        <StyleSheet name="ResetButton">
+            texture:Reset;
+            texture-Selected:Reset;
+            region:;
+            region-Selected:;
+            region-Clicked:;
+            tint:aaaaaa;
+            cursor:sys_hand;
+        </StyleSheet>
+        <StyleSheet name="HeaderText">
+            font:UbuntuBold_15;
+            color:ffffff;
+            halign:left;
+            valign:center
+        </StyleSheet>
+        <StyleSheet name="TextInputText" parent="#TextInput">
+            texture:colors;
+            region:transparent;
+            font:Demi_12;
+            halign: center;
+            valign: center;
+            color: textColor;
+            multiline:false;
+            halign: left;
+            maxlen:50;
+        </StyleSheet>
+    </styles>
+
+    <BluePrints>
+        <BluePrint name="Slider" instantiable="true">
+            <Text name="Text" dimensions="top:0; left:0; width:100%-80; height:12" style="font:Demi_9;"></Text>
+            <Text name="Value" dimensions="top:0; right:100%-30; width:80; height:12" style="font:Demi_9; halign:right;"></Text>
+            <Adjuster name="Adjuster" dimensions="top:16; left:0; width:100%-30; height:16" style="tabbable:true; scrollsteps:100; horizontal:true;">
+                <!-- <StillArt dimensions="center-x:25%; top:100%+1; width:14; height:10" style="texture:ArrowUp; region:ArrowUp;"/> -->
+            </Adjuster>
+            <Button name="Reset" dimensions="left:100%-25; top:8; height:25; width:25;" class="ResetButton">
+
+            </Button>
+        </BluePrint>
+
+        <BluePrint name="MorphGroup" instantiable="true">
+            <Group name="Category" dimensions="right:100%; top:0%; height:30; width:100%;">
+                <Button name="Header" dimensions="right:100%; top:0%; height:39; width:100%;" class="CategoryHeaderButton">
+                    <Text name="Text" dimensions="right:100%-40; center-y:50%; height:30; width:100%" class="CategoryHeaderText"/>
+                </Button>
+
+                <Group name="ClipBox" dimensions="right:100%-20; top:40; height:200; width:100%;" style="clip-children:false; visible:false;">
+                    <ListLayout name="List" dimensions="right:100%; top:0; height:40; width:100%;" style="vpadding:0; visible:true; vertical:true;"/>
+                </Group>
+            </Group>
+        </BluePrint>
+    </BluePrints>
+
+    <Frames>
+		<PanelFrame name="Options" dimensions="dock:fill;" visible="false" permanent="true" topmost="false" depth="10000">
+			<Children>
+                <FocusBox id="ModelDrag" dimensions="dock:fill" style="visible:true; eatsmice:true;">
+                    <Events>
+                        <OnMouseDown bind="OnModelDragDown"/>
+                        <OnMouseUp bind="OnModelDragUp"/>
+                        <OnScroll bind="OnModelZoom" />
+                    </Events>
+                </FocusBox>
+
+                <Button id="Exit" dimensions="left:10; top:8; height:48; width:100;" class="ButtonSimple" style="texture:backBtnBG; texture-Selected:backBtnBGRollover; region:; region-Selected:; region-Clicked:; cursor:sys_hand;">
+                    <Group name="contents" dimensions="left:15; center-y:50%; width:0; height:18">
+                        <StillArt dimensions="left:0; center-y:50%; width:12; height:18" style="texture:GarageParts; region:ItemArrow; visible:true; invert-x:true;"/>
+                        <Text name="text" key="LOGIN_BACK" dimensions="center-y:50%; left:16; height:18; width:0;" style="font:Demi_12; halign:left; valign:center"/>
+                    </Group>
+                    <Events>
+                        <OnSubmit bind="Close"/>
+                    </Events>
+                </Button>
+
+                <!-- Not worrying about locales so just setting the width -->
+                <Button id="ResetToDefaultsBtn" dimensions="left:115; top:8; height:48; width:180;" class="ButtonSimple"
+                    style="texture:defaultsBtnBG; texture-Selected:defaultsBtnBGRollover; alpha:1; region:; region-Selected:; region-Clicked:; cursor:sys_hand;">
+                    <Text name="text" key="OPTIONS_DEFAULT_BUTTON_TEXT" dimensions="center-x:50%; center-y:50%; height:30; width:100%" style="font:Demi_12; color:ffffff; halign:center; valign:center;"/>
+                    <Events>
+                        <OnSubmit bind="OnResetAllDefaults"/>
+                    </Events>
+                </Button>
+
+                <Button id="ToggleUiControls" dimensions="left:300; top:8; height:48; width:150;" class="ButtonSimple" style="texture:backBtnBG; texture-Selected:backBtnBGRollover; region:; region-Selected:; region-Clicked:; cursor:sys_hand;">
+                    <Text name="text" key="TOGGLE_UI_CONTROLS" dimensions="center-y:50%; left:0; height:30; width:100%;" style="font:Demi_12; halign:center; halign:center; valign:center"/>
+                    <Events>
+                        <OnSubmit bind="OnToggleUIControls"/>
+                    </Events>
+                </Button>
+
+                <Text id="DebugTxt" dimensions="top:0; left:0; width:100%; height:64;" style="font:Demi_12; halign: center; valign: center; alpha:0;"></Text>
+
+                <Group id="CustomizeOptions" dimensions="left:0; top:0; height:500; width:300;" style="alpha:1; visible:false;">
+                   
+                </Group>
+
+                <Group id="ViewerOptions" dimensions="left:0; top:0; height:500; width:300;" style="alpha:1; visible:false;">
+                    <Group dimensions="left:0; top:0; height:100; width:100%;">
+                       <Group dimensions="left:0; top:0; height:39; width:100%;">
+                            <StillArt name="bg" dimensions="dock:fill" style="texture:CCHeader; eatsmice:false; invert-x:true;"/>
+                            <Text key="CAMERA_HEADER" dimensions="top:0; left:30; height:100%; width:100%;" class="HeaderText"/>
+                       </Group>
+
+                       <Group dimensions="left:10; top:42; width:100%; height:60">
+                            <Button dimensions="left:0; top:0; width:60; height:60" class="ButtonSimple" style="texture:head_left; texture-Selected:head_left; region:; region-Selected:; region-Clicked:; cursor:sys_hand; tint:aaaaaa;">
+                                <Text id="CAMERA_LEFT" key="CAMERA_LEFT" dimensions="center-x:50%; center-y:100%+6; height:30; width:100%" style="font:UbuntuBold_10; color:aaaaaa; halign:center; valign:center"/>
+                                <Events>
+                                    <OnSubmit bind="OnSwapCamLeft"/>                       
+                                </Events>
+                            </Button>
+
+                            <Button dimensions="left:65; top:0; width:60; height:60" class="ButtonSimple" style="texture:head_front; texture-Selected:head_front; region:; region-Selected:; region-Clicked:; cursor:sys_hand; tint:aaaaaa;">
+                                <Events>
+                                    <OnSubmit bind="OnSwapCamFront"/>                       
+                                </Events>
+                                <Text id="CAMERA_FRONT" key="CAMERA_FRONT" dimensions="center-x:50%; center-y:100%+6; height:30; width:100%" style="font:UbuntuBold_10; color:aaaaaa; halign:center; valign:center"/>
+                            </Button>
+
+                            <Button dimensions="left:130; top:0; width:60; height:60" class="ButtonSimple" style="texture:head_right; texture-Selected:head_right; region:; region-Selected:; region-Clicked:; cursor:sys_hand; tint:aaaaaa;">
+                                <Events>
+                                    <OnSubmit bind="OnSwapCamRight"/>                       
+                                </Events>
+                                <Text id="CAMERA_RIGHT" key="CAMERA_RIGHT" dimensions="center-x:50%; center-y:100%+6; height:30; width:100%" style="font:UbuntuBold_10; color:aaaaaa; halign:center; valign:center"/>
+                            </Button>
+
+                            <Button dimensions="left:195; top:0; width:60; height:60" class="ButtonSimple" style="texture:far; texture-Selected:far; region:; region-Selected:; region-Clicked:; cursor:sys_hand; tint:aaaaaa;">
+                                <Events>
+                                    <OnSubmit bind="OnSwapCamFar"/>                       
+                                </Events>
+                                <Text id="CAMERA_FAR" key="CAMERA_FAR" dimensions="center-x:50%; center-y:100%+6; height:30; width:100%" style="font:UbuntuBold_10; color:aaaaaa; halign:center; valign:center"/>
+                            </Button>
+                        </Group>
+
+                        <Group dimensions="left:0; top:120; height:100; width:100%;">
+                           <Group dimensions="left:0; top:0; height:39; width:100%;">
+                                <StillArt name="bg" dimensions="dock:fill" style="texture:CCHeader; eatsmice:false; invert-x:true;"/>
+                                <Text key="APPEARANCE_HEADER" dimensions="top:0; left:30; height:100%; width:100%;" class="HeaderText"/>
+                           </Group>
+
+                           <Group dimensions="left:10; top:42; width:100%; height:60">
+                                <ListLayout name="List" dimensions="left:0; top:0; height:27; width:100%-40;" style="vpadding:2; visible:true; vertical:true;">
+                                    <CheckBox dimensions="dock:fill" key="DISPLAY_HAIR" style="font:UbuntuRegular_11; color:#FFFFFF; text-right:true;" default="1">
+                                        <Events>
+                                            <OnStateChanged bind="OnDisplayHair"/>
+                                        </Events>
+                                    </CheckBox>
+
+                                    <CheckBox dimensions="dock:fill" key="DISPLAY_BATTLEFRAME" style="font:UbuntuRegular_11; color:#FFFFFF; text-right:true;" default="0">
+                                        <Events>
+                                            <OnStateChanged bind="OnDisplayBattleframe"/>
+                                        </Events>
+                                    </CheckBox>
+
+                                    <CheckBox dimensions="dock:fill" key="DISPLAY_ORNAMENTS" style="font:UbuntuRegular_11; color:#FFFFFF; text-right:true;" default="0">
+                                        <Events>
+                                            <OnStateChanged bind="OnDisplayOrnaments"/>
+                                        </Events>
+                                    </CheckBox>
+                                </ListLayout>
+                           </Group>
+                       </Group>
+
+                        <Group dimensions="left:0; top:247; height:100; width:100%;">
+                           <Group dimensions="left:0; top:0; height:39; width:100%;">
+                                <StillArt name="bg" dimensions="dock:fill" style="texture:CCHeader; eatsmice:false; invert-x:true;"/>
+                                <Text key="PRESETS" dimensions="top:0; left:30; height:100%; width:100%;" class="HeaderText"/>
+                           </Group>
+
+                           <Group dimensions="left:10; top:42; width:100%; height:60">
+                                <ListLayout name="List" dimensions="left:0; top:0; height:27; width:100%-40;" style="vpadding:5; visible:true; vertical:true;">
+                                    <Group dimensions="top:0; left:0; width:100%; height:27">
+                                        <Text name="Text" key="CURRENT_PRESET" dimensions="center-y:50%; left:0; width:40%-10; height:20" style="font:UbuntuRegular_11; color:#aaaaaa; valign:center; halign:right;"></Text>
+                                        <Dropdown id="PresetsDD" dimensions="center-y:50%; left:40%; width:60%; height:20" style="font:UbuntuRegular_11; color:#FFFFFF;">
+                                            <Events>
+                                                <OnSelect bind="OnPresetSelected"/>
+                                            </Events>
+                                        </Dropdown>
+                                        <!-- <Button key="X" dimensions="left:100%-24; center-y:50%; width:24; height:24" style="tint:#8E0909; cursor:sys_hand; tint:aaaaaa;">
+                                            <Events>
+                                                <OnSubmit bind="OnSwapCamFar"/>                       
+                                            </Events>
+                                        </Button> -->
+                                    </Group>
+
+                                    <Group dimensions="dock:fill;">
+                                        <Button id="PresetsSaveButton" key="SAVE" dimensions="top:0; left:0; width:50%-5; height:100%" style="tint:#629E0A; cursor:sys_hand; tint:aaaaaa;">
+                                                <Events>
+                                                    <OnSubmit bind="OnPresetSave"/>                       
+                                                </Events>
+                                        </Button>
+
+                                        <Button id="PresetsDeleteButton" key="DELETE" dimensions="top:0; left:50%+5; width:50%-5; height:100%" style="tint:#8E0909; cursor:sys_hand; tint:aaaaaa;">
+                                            <Events>
+                                                <OnSubmit bind="OnPresetDelete"/>                       
+                                            </Events>
+                                        </Button>
+                                    </Group>
+                                </ListLayout>
+                           </Group>
+                       </Group>
+
+                       <Group dimensions="left:0; top:350; height:100; width:100%;">
+                           <Group dimensions="left:0; top:0; height:39; width:100%;">
+                                <StillArt name="bg" dimensions="dock:fill" style="texture:CCHeader; eatsmice:false; invert-x:true;"/>
+                                <Text key="FUN_HEADER" dimensions="top:0; left:30; height:100%; width:100%;" class="HeaderText"/>
+                           </Group>
+
+                           <Group id="DarkSouls" dimensions="left:10; top:42; width:100%; height:60">
+                                <Text name="Text" key="DARK_SOULS" dimensions="top:0; left:0; width:100%-80; height:12" style="font:Demi_9;"></Text>
+                                <Text name="Value" dimensions="top:0; right:100%-30; width:80; height:12" style="font:Demi_9; halign:right;"></Text>
+                                <Adjuster name="Adjuster" dimensions="top:16; left:0; width:100%-30; height:16" style="tabbable:true; scrollsteps:100; horizontal:true;">
+                                    <Events>
+                                        <OnStateChanged bind="OnDarkSouls"/>
+                                    </Events>
+                                </Adjuster>
+                           </Group>
+                       </Group>
+                    </Group>
+                </Group>
+
+                <Group dimensions="center-x:50%; width:25%; bottom:100%-40; height:5%">
+                    <Button id="RotateArrowLeft" dimensions="left:0; height:100%; aspect:1.24; top:0;"
+                        class="ButtonSimple" style="texture:rotateArrowLeft; texture-Selected:rotateArrowLeftHover; mask:rotateLeftMask; region:; region-Selected:; region-Clicked:;">
+                        <Events>
+                            <OnMouseDown bind="OnLeftRotateDown"/>
+                        </Events>
+                    </Button>
+                    <Button id="RotateArrowRight" dimensions="right:100%; height:100%; aspect:1.24; top:0;"
+                        class="ButtonSimple" style="texture:rotateArrowRight; texture-Selected:rotateArrowRightHover; mask:rotateRightMask; region:; region-Selected:; region-Clicked:;">
+                        <Events>
+                            <OnMouseDown bind="OnRightRotateDown"/>
+                        </Events>
+                    </Button>
+                </Group>
+
+                <Group dimensions="left:0; top:0; width:1; height:1" style="alpha:0;">
+                    <Text id="TextInputPopUp" dimensions="top:25; left:50%-85; width:10; height:24" style="font:Demi_12; halign: center; valign: center;">
+                        <Border name="InputGroup" class="ButtonBorder" dimensions="center-y:50%; left:100%+5; width:150; height:30;" style="eatsmice:false; alpha:1; exposure:1; tint:#30B9B9B9" style="clip-children:true; padding:0">
+                            <TextInput name="TextInput" dimensions="dock:fill;" class="TextInputText"/>
+                        </Border>
+                    </Text>
+                </Group>
+            </Children>
+        </PanelFrame>
+    </Frames>
+</Component>
