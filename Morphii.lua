@@ -76,6 +76,7 @@ local C =
 		"Dank Souls",
 		"Dear God Why!!, Souls"
 	},
+	BASE_MODEL_SDBID = 75662,
 	MORPH_PRESETS_KEY = "MorphPresets",
 	MORPH_PRESET_PREFIX = "Morph_",
 	CATEGORY_CLOSED_HEIGHT = 40,
@@ -393,7 +394,7 @@ function CreateSInEnviro()
 
 	g_PlayerMdlId = Sinvironment.CreateModel("local_player")
 	Sinvironment.SetCharacterSex(g_PlayerMdlId, info.gender)
-	Sinvironment.LoadCharacterComponent(g_PlayerMdlId, "main_armor", 75662)
+	Sinvironment.LoadCharacterComponent(g_PlayerMdlId, "main_armor", C.BASE_MODEL_SDBID)
 	Sinvironment.LoadCharacterComponent(g_PlayerMdlId, "head", info.headMain)
 	Sinvironment.LoadCharacterComponent(g_PlayerMdlId, "head_accessory_a", info.headAccA)
 	Sinvironment.LoadCharacterComponent(g_PlayerMdlId, "head_accessory_b", info.headAccB)
@@ -763,7 +764,7 @@ function CameraLerpDo()
 end
 
 function LoadPresets()
-	g_Presets = Component.GetSetting(C.MORPH_PRESETS_KEY)
+	g_Presets = Component.GetSetting(C.MORPH_PRESETS_KEY) or {}
 
 	C.PRESETS:ClearItems()
 	C.PRESETS:AddItem("Default")
@@ -776,7 +777,7 @@ function LoadPresets()
 end
 
 function SavePresets()
-	Component.SaveSetting(C.MORPH_PRESETS_KEY, LoadPresets)
+	Component.SaveSetting(C.MORPH_PRESETS_KEY, g_Presets)
 end
 
 function LoadLook(name)
